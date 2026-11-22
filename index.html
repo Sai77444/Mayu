@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ Practical Programs</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #090909;
+    color: #eeeeee;
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+    padding: 40px 25px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #f5f5f5;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #858585;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.program-btn {
+    width: 100%;
+    min-height: 120px;
+    background: #171717;
+    color: #eeeeee;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    padding: 24px 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.program-btn:hover {
+    background: #222222;
+    border-color: #666666;
+    transform: translateY(-4px);
+}
+
+.program-btn:active {
+    transform: scale(0.98);
+}
+
+.program-number {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    background: #303030;
+    color: #ffffff;
+    border-radius: 7px;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.program-name {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.copy-text {
+    display: block;
+    margin: 12px 0 0 43px;
+    color: #999999;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.program-btn.copied {
+    border-color: #777777;
+    background: #252525;
+}
+
+/* CSS DRAWN KISS */
+
+.kiss-mark {
+    position: fixed;
+    z-index: 99999;
+    width: 200px;
+    height: 160px;
+    pointer-events: none;
+    animation: flyingKiss 2.5s ease-out forwards;
+}
+
+.kiss-mark svg {
+    width: 200%;
+    height: 200%;
+    overflow: visible;
+}
+
+@keyframes flyingKiss {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.45) rotate(-15deg);
+    }
+
+    20% {
+        opacity: 0.65;
+        transform: translate(12px, -22px) scale(1) rotate(-5deg);
+    }
+
+    65% {
+        opacity: 0.8;
+        transform: translate(42px, -65px) scale(1.15) rotate(8deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(75px, -105px) scale(1.3) rotate(15deg);
+    }
+}
+
+/* COPY CONFIRMATION */
+
+#toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%) translateY(15px);
+    background: #202020;
+    color: #eeeeee;
+    border: 1px solid #555555;
+    border-radius: 8px;
+    padding: 13px 22px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    transition: 0.3s ease;
+    pointer-events: none;
+    z-index: 100000;
+    white-space: nowrap;
+}
+
+#toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+footer {
+    text-align: center;
+    color: #666666;
+    font-size: 12px;
+    margin-top: 60px;
+    letter-spacing: 1px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 650px) {
+    .container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media(max-width: 420px) {
+    body {
+        padding: 25px 15px;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>&lt;/&gt; C++ PROGRAMS</h1>
+    <p class="subtitle">PRACTICAL CODE COLLECTION</p>
+</header>
+
+<div class="container" id="programContainer"></div>
+
+<div id="toast"></div>
+
+<footer>
+    C++ PRACTICAL COLLECTION | 9 PROGRAMS
+</footer>
+
+<script>
+
+// ALL 9 C++ PROGRAMS
+
+const programs = [
+
+{
+name: "Song Class",
+code: `#include <iostream>
+#include <string>
+using namespace std;
+
+class Song
+{
+private:
+    int songID;
+    string songTitle;
+    string artistName;
+    string albumName;
+    string genre;
+    float duration;
+
+public:
+    Song()
+    {
+        songID = 0;
+        songTitle = "Unknown";
+        artistName = "Unknown";
+        albumName = "Unknown";
+        genre = "Unknown";
+        duration = 0;
+        cout << "Default Constructor Called" << endl;
+    }
+
+    Song(int id, string title, string artist,
+         string album, string g, float d)
+    {
+        songID = id;
+        songTitle = title;
+        artistName = artist;
+        albumName = album;
+        genre = g;
+        duration = d;
+        cout << "Parameterized Constructor Called" << endl;
+    }
+
+    Song(const Song &s)
+    {
+        songID = s.songID;
+        songTitle = s.songTitle;
+        artistName = s.artistName;
+        albumName = s.albumName;
+        genre = s.genre;
+        duration = s.duration;
+        cout << "Copy Constructor Called" << endl;
+    }
+
+    void display()
+    {
+        cout << "Song ID: " << songID << endl;
+        cout << "Title: " << songTitle << endl;
+        cout << "Artist: " << artistName << endl;
+        cout << "Album: " << albumName << endl;
+        cout << "Genre: " << genre << endl;
+        cout << "Duration: " << duration << endl;
+    }
+
+    ~Song()
+    {
+        cout << "Destructor Called" << endl;
+    }
+};
+
+int main()
+{
+    Song s1;
+    Song s2(101, "Perfect", "Ed Sheeran",
+            "Divide", "Pop", 4.5);
+    Song s3(s2);
+
+    cout << "\\nDefault Constructor:" << endl;
+    s1.display();
+
+    cout << "\\nParameterized Constructor:" << endl;
+    s2.display();
+
+    cout << "\\nCopy Constructor:" << endl;
+    s3.display();
+
+    return 0;
+}`
+},
+
+{
+name: "Bank Account",
+code: `#include <iostream>
+using namespace std;
+
+class BankAccount
+{
+    int accountNo;
+    float balance;
+    static float interestRate;
+
+public:
+    BankAccount(int a, float b)
+    {
+        accountNo = a;
+        balance = b;
+    }
+
+    inline float calculateInterest()
+    {
+        return balance * interestRate / 100;
+    }
+
+    void display()
+    {
+        cout << "Account Number: " << accountNo << endl;
+        cout << "Balance: " << balance << endl;
+        cout << "Interest: " << calculateInterest() << endl;
+    }
+
+    friend void compareBalance(BankAccount, BankAccount);
+};
+
+float BankAccount::interestRate = 5.0;
+
+void compareBalance(BankAccount a, BankAccount b)
+{
+    if (a.balance > b.balance)
+        cout << "Account 1 has higher balance" << endl;
+    else if (b.balance > a.balance)
+        cout << "Account 2 has higher balance" << endl;
+    else
+        cout << "Both accounts have equal balance" << endl;
+}
+
+int main()
+{
+    BankAccount b1(101, 50000);
+    BankAccount b2(102, 70000);
+
+    cout << "Account 1:" << endl;
+    b1.display();
+
+    cout << "\\nAccount 2:" << endl;
+    b2.display();
+
+    cout << "\\nBalance Comparison:" << endl;
+    compareBalance(b1, b2);
+
+    return 0;
+}`
+},
+
+{
+name: "Employee Biodata",
+code: `#include <iostream>
+using namespace std;
+
+class Personal
+{
+protected:
+    string name;
+    int age;
+
+public:
+    void getPersonal()
+    {
+        cout << "Enter Name: ";
+        cin >> name;
+
+        cout << "Enter Age: ";
+        cin >> age;
+    }
+};
+
+class Professional : virtual public Personal
+{
+protected:
+    string company;
+    float salary;
+
+public:
+    void getProfessional()
+    {
+        cout << "Enter Company: ";
+        cin >> company;
+
+        cout << "Enter Salary: ";
+        cin >> salary;
+    }
+};
+
+class Academic : virtual public Personal
+{
+protected:
+    string qualification;
+    float percentage;
+
+public:
+    void getAcademic()
+    {
+        cout << "Enter Qualification: ";
+        cin >> qualification;
+
+        cout << "Enter Percentage: ";
+        cin >> percentage;
+    }
+};
+
+class Employee : public Professional, public Academic
+{
+public:
+    void getData()
+    {
+        getPersonal();
+        getProfessional();
+        getAcademic();
+    }
+
+    void display()
+    {
+        cout << "\\nEmployee Biodata" << endl;
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Company: " << company << endl;
+        cout << "Salary: " << salary << endl;
+        cout << "Qualification: " << qualification << endl;
+        cout << "Percentage: " << percentage << endl;
+    }
+};
+
+int main()
+{
+    Employee e;
+    e.getData();
+    e.display();
+
+    return 0;
+}`
+},
+
+{
+name: "Vehicle Rental",
+code: `#include <iostream>
+using namespace std;
+
+class Vehicle
+{
+protected:
+    int days;
+
+public:
+    virtual void getData()
+    {
+        cout << "Enter number of rental days: ";
+        cin >> days;
+    }
+
+    virtual void calculateRent() = 0;
+
+    virtual ~Vehicle() {}
+};
+
+class Bike : public Vehicle
+{
+public:
+    void calculateRent()
+    {
+        getData();
+        cout << "Bike Rental: " << days * 500 << endl;
+    }
+};
+
+class Bus : public Vehicle
+{
+public:
+    void calculateRent()
+    {
+        getData();
+        cout << "Bus Rental: " << days * 3000 << endl;
+    }
+};
+
+class Car : public Vehicle
+{
+public:
+    void calculateRent()
+    {
+        getData();
+        cout << "Car Rental: " << days * 1500 << endl;
+    }
+};
+
+int main()
+{
+    int choice;
+
+    cout << "1. Bike" << endl;
+    cout << "2. Bus" << endl;
+    cout << "3. Car" << endl;
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    Vehicle *v;
+
+    Bike b;
+    Bus bu;
+    Car c;
+
+    switch (choice)
+    {
+        case 1:
+            v = &b;
+            break;
+
+        case 2:
+            v = &bu;
+            break;
+
+        case 3:
+            v = &c;
+            break;
+
+        default:
+            cout << "Invalid Choice";
+            return 0;
+    }
+
+    v->calculateRent();
+
+    return 0;
+}`
+},
+
+{
+name: "Complex Numbers",
+code: `#include <iostream>
+using namespace std;
+
+class Complex
+{
+    float real, imag;
+
+public:
+    Complex()
+    {
+        real = 0;
+        imag = 0;
+    }
+
+    friend istream& operator>>(istream &in, Complex &c);
+    friend ostream& operator<<(ostream &out, Complex c);
+
+    Complex operator+(Complex c)
+    {
+        Complex temp;
+        temp.real = real + c.real;
+        temp.imag = imag + c.imag;
+        return temp;
+    }
+
+    Complex operator-(Complex c)
+    {
+        Complex temp;
+        temp.real = real - c.real;
+        temp.imag = imag - c.imag;
+        return temp;
+    }
+
+    Complex operator*(Complex c)
+    {
+        Complex temp;
+        temp.real = real * c.real - imag * c.imag;
+        temp.imag = real * c.imag + imag * c.real;
+        return temp;
+    }
+};
+
+istream& operator>>(istream &in, Complex &c)
+{
+    cout << "Enter real part: ";
+    in >> c.real;
+
+    cout << "Enter imaginary part: ";
+    in >> c.imag;
+
+    return in;
+}
+
+ostream& operator<<(ostream &out, Complex c)
+{
+    out << c.real << " + " << c.imag << "i";
+    return out;
+}
+
+int main()
+{
+    Complex c1, c2, result;
+
+    cout << "Enter first complex number:" << endl;
+    cin >> c1;
+
+    cout << "Enter second complex number:" << endl;
+    cin >> c2;
+
+    result = c1 + c2;
+    cout << "\\nAddition: " << result << endl;
+
+    result = c1 - c2;
+    cout << "Subtraction: " << result << endl;
+
+    result = c1 * c2;
+    cout << "Multiplication: " << result << endl;
+
+    return 0;
+}`
+},
+
+{
+name: "User Validation",
+code: `#include <iostream>
+#include <stdexcept>
+using namespace std;
+
+class User
+{
+    int age;
+    float salary;
+    string city;
+    int vehicle;
+
+public:
+    void addUser()
+    {
+        cout << "Enter Age: ";
+        cin >> age;
+
+        cout << "Enter Salary: ";
+        cin >> salary;
+
+        cout << "Enter City: ";
+        cin >> city;
+
+        cout << "Do you have a 4-wheeler? (1=Yes, 0=No): ";
+        cin >> vehicle;
+
+        try
+        {
+            if (age < 18)
+                throw invalid_argument("Age must be 18 or above");
+
+            if (salary < 0)
+                throw invalid_argument("Salary cannot be negative");
+
+            if (city != "Pune")
+                throw invalid_argument("City must be Pune");
+
+            if (vehicle != 1)
+                throw invalid_argument("4-wheeler is required");
+
+            cout << "\\nUser Added Successfully!" << endl;
+        }
+        catch (exception &e)
+        {
+            cout << "Error: " << e.what() << endl;
+        }
+    }
+};
+
+int main()
+{
+    User u;
+    u.addUser();
+
+    return 0;
+}`
+},
+
+{
+name: "File Handling",
+code: `#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Student
+{
+    int rollNo;
+    char name[50];
+    float marks;
+
+public:
+    void getData()
+    {
+        cout << "Enter Roll Number: ";
+        cin >> rollNo;
+
+        cout << "Enter Name: ";
+        cin >> name;
+
+        cout << "Enter Marks: ";
+        cin >> marks;
+    }
+
+    void display()
+    {
+        cout << "\\nRoll Number: " << rollNo << endl;
+        cout << "Name: " << name << endl;
+        cout << "Marks: " << marks << endl;
+    }
+};
+
+int main()
+{
+    Student s;
+
+    ofstream outFile("student.dat", ios::binary);
+
+    if (!outFile)
+    {
+        cout << "File cannot be opened";
+        return 1;
+    }
+
+    s.getData();
+    outFile.write((char*)&s, sizeof(s));
+    outFile.close();
+
+    cout << "\\nData Written Successfully!" << endl;
+
+    Student s1;
+    ifstream inFile("student.dat", ios::binary);
+
+    if (!inFile)
+    {
+        cout << "File cannot be opened";
+        return 1;
+    }
+
+    inFile.read((char*)&s1, sizeof(s1));
+
+    cout << "\\nStudent Record:" << endl;
+    s1.display();
+
+    inFile.close();
+
+    return 0;
+}`
+},
+
+{
+name: "Template Sorting",
+code: `#include <iostream>
+using namespace std;
+
+template <class T>
+void bubbleSort(T arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                T temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+template <class T>
+void display(T arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    int a[5] = {50, 20, 40, 10, 30};
+    float b[5] = {5.5, 2.2, 4.4, 1.1, 3.3};
+
+    cout << "Integer Array Before Sorting: ";
+    display(a, 5);
+
+    bubbleSort(a, 5);
+
+    cout << "Integer Array After Sorting: ";
+    display(a, 5);
+
+    cout << "\\nFloat Array Before Sorting: ";
+    display(b, 5);
+
+    bubbleSort(b, 5);
+
+    cout << "Float Array After Sorting: ";
+    display(b, 5);
+
+    return 0;
+}`
+},
+
+{
+name: "Item Management",
+code: `#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Item
+{
+public:
+    int code;
+    float cost;
+    int quantity;
+    string name;
+
+    void getData()
+    {
+        cout << "Enter Item Code: ";
+        cin >> code;
+
+        cout << "Enter Item Name: ";
+        cin >> name;
+
+        cout << "Enter Cost: ";
+        cin >> cost;
+
+        cout << "Enter Quantity: ";
+        cin >> quantity;
+    }
+
+    void display() const
+    {
+        cout << code << "\\t" << name << "\\t"
+             << cost << "\\t" << quantity << endl;
+    }
+};
+
+int main()
+{
+    vector<Item> items;
+    int n;
+
+    cout << "Enter number of items: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        Item item;
+        item.getData();
+        items.push_back(item);
+    }
+
+    cout << "\\nItem Records:" << endl;
+    cout << "Code\\tName\\tCost\\tQuantity" << endl;
+
+    for (const auto &item : items)
+    {
+        item.display();
+    }
+
+    sort(items.begin(), items.end(),
+         [](const Item &a, const Item &b)
+         {
+             return a.code < b.code;
+         });
+
+    cout << "\\nItems Sorted by Code:" << endl;
+
+    for (const auto &item : items)
+    {
+        item.display();
+    }
+
+    int searchCode;
+
+    cout << "\\nEnter item code to search: ";
+    cin >> searchCode;
+
+    auto it = find_if(items.begin(), items.end(),
+        [searchCode](const Item &item)
+        {
+            return item.code == searchCode;
+        });
+
+    if (it != items.end())
+    {
+        cout << "\\nItem Found:" << endl;
+        it->display();
+    }
+    else
+    {
+        cout << "Item Not Found" << endl;
+    }
+
+    return 0;
+}`
+}
+];
+
+// CREATE 9 BUTTONS
+
+const container = document.getElementById("programContainer");
+
+programs.forEach((program, index) => {
+    const button = document.createElement("button");
+
+    button.className = "program-btn";
+
+    button.innerHTML = `
+        <span class="program-number">
+            ${String(index + 1).padStart(2, "0")}
+        </span>
+
+        <span class="program-name">
+            ${program.name}
+        </span>
+
+        <span class="copy-text">
+            Copy Code &nbsp; →
+        </span>
+    `;
+
+    button.addEventListener("click", function() {
+        copyProgram(program.code, button);
+    });
+
+    container.appendChild(button);
+});
+
+// DRAW AND SHOW CSS KISS
+
+function showFlyingKiss(button) {
+
+    const kiss = document.createElement("div");
+
+    kiss.className = "kiss-mark";
+
+    kiss.innerHTML = `
+        <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M8 20
+                   C2 12, 10 4, 20 11
+                   C28 3, 39 9, 34 18
+                   C30 25, 19 30, 17 33
+                   C14 29, 11 26, 8 20Z"
+                fill="#e6a0b5"
+                opacity="0.72"
+            />
+            <path
+                d="M21 21
+                   C27 14, 37 12, 43 18
+                   C48 23, 40 29, 33 29
+                   C28 29, 24 26, 21 21Z"
+                fill="#b94b70"
+                opacity="0.92"
+            />
+            <path
+                d="M43 13 L47 7 L46 15 L54 12 L48 19"
+                fill="none"
+                stroke="#d98aa3"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                opacity="0.8"
+            />
+        </svg>
+    `;
+
+    const rect = button.getBoundingClientRect();
+
+    kiss.style.left =
+        (rect.left + rect.width / 2) + "px";
+
+    kiss.style.top =
+        (rect.top + rect.height / 2) + "px";
+
+    document.body.appendChild(kiss);
+
+    setTimeout(() => kiss.remove(), 1500);
+}
+
+// COPY FUNCTION
+
+async function copyProgram(code, button) {
+
+    let copied = false;
+
+    // Modern clipboard method
+
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(code);
+            copied = true;
+        }
+    }
+    catch (error) {
+        copied = false;
+    }
+
+    // Fallback method
+
+    if (!copied) {
+
+        const textarea = document.createElement("textarea");
+
+        textarea.value = code;
+        textarea.setAttribute("readonly", "");
+
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "0";
+
+        document.body.appendChild(textarea);
+
+        textarea.focus();
+        textarea.select();
+        textarea.setSelectionRange(0, textarea.value.length);
+
+        try {
+            copied = document.execCommand("copy");
+        }
+        catch (error) {
+            copied = false;
+        }
+
+        textarea.remove();
+    }
+
+    if (copied) {
+
+        // Kiss appears after successful copying
+        showFlyingKiss(button);
+
+        button.classList.add("copied");
+
+        const copyText = button.querySelector(".copy-text");
+
+        copyText.textContent = "Copied Successfully";
+
+        showToast("CODE COPIED SUCCESSFULLY");
+
+        setTimeout(() => {
+            button.classList.remove("copied");
+            copyText.innerHTML = "Copy Code &nbsp; →";
+        }, 1600);
+
+    } else {
+
+        showToast("Copy failed. Please use Live Server.");
+    }
+}
+
+// TOAST MESSAGE
+
+let toastTimer;
+
+function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1800);
+}
+
+</script>
+
+</body>
+</html>
